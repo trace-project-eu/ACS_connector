@@ -1,5 +1,6 @@
-import json
+from datetime import datetime
 import uuid
+import json
 import math
 
 def generate_shipment_json(excel_data):
@@ -18,11 +19,11 @@ def generate_shipment_json(excel_data):
                 "Volume": handle_null(shipment_data[4]),
                 "Type": None,
                 "Status": "Request imported to trace",
-                "PickUpDate": handle_null(shipment_data[8]),
-                "DeliveryDate": handle_null(shipment_data[9]),
+                "PickUpDate": str(parse_date(handle_null(shipment_data[8]))),
+                "DeliveryDate": str(parse_date(handle_null(shipment_data[9]))),
                 "Priority": handle_null(shipment_data[10]),
                 "RespLogisticsCo": "ACS",
-                "ScheduledDelivery": handle_null(shipment_data[11]),
+                "ScheduledDelivery": str(parse_date(handle_null(shipment_data[11]))),
                 "DeliveryTimeWindow": handle_null(shipment_data[12]),
                 "Good": [
                     {
@@ -31,7 +32,7 @@ def generate_shipment_json(excel_data):
                         "Weight": handle_null(shipment_data[3]),
                         "Volume": handle_null(shipment_data[4]),
                         "SpecialRequirements": handle_null(
-                            f'Voucher: {shipment_data[13]} | Receiver\'s telephone: {shipment_data[14]} | ACS Endpoint: {shipment_data[15]} | Volumetric weight: {shipment_data[16]}'
+                            f'Voucher: {handle_null(shipment_data[13])} | Receiver\'s telephone: {handle_null(shipment_data[14])} | ACS Endpoint: {handle_null(shipment_data[15])} | Volumetric weight: {handle_null(shipment_data[16])}'
                         ),
                         "Type": None,
                         "Dimensions": handle_null(f'{shipment_data[5]} x {shipment_data[6]} x {shipment_data[7]}'),
@@ -48,6 +49,15 @@ def generate_shipment_json(excel_data):
     return all_shipments
 
 def handle_null(value):
+    """Returns None for empty, falsy, or NaN values. Otherwise, returns the value."""
     if value is None or value == "" or (isinstance(value, float) and math.isnan(value)) or str(value).lower() == "nan":
         return None
     return value
+
+def parse_date(date_string):
+    """Converts a string in 'dd/mm/yyyy' format to a datetime object."""
+    try:
+        # Correctly use datetime.strptime to parse the date
+        return datetime.strptime(date_string, "%d/%m/%Y") if date_string else None
+    except ValueError:
+        return None  # Return None if the date string is not in the expected format
