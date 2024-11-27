@@ -15,28 +15,30 @@ def generate_shipment_json(excel_data):
                 "ShipmentID": str(uuid.uuid4()),
                 "Origin": handle_null(shipment_data[1]),
                 "Destination": handle_null(shipment_data[2]),
-                "Weight": handle_null(shipment_data[3]),
-                "Volume": handle_null(shipment_data[4]),
-                "Type": None,
-                "Status": "Request imported to trace",
+                "ShipmentWeight": handle_null(shipment_data[3]),
+                "ShipmentVolume": handle_null(shipment_data[4]),
+                "ShipmentType": None,
+                "ShipmentStatus": "Request imported to trace",
                 "PickUpDate": str(parse_date(handle_null(shipment_data[8]))),
                 "DeliveryDate": str(parse_date(handle_null(shipment_data[9]))),
                 "Priority": handle_null(shipment_data[10]),
                 "RespLogisticsCo": "ACS",
-                "ScheduledDelivery": str(parse_date(handle_null(shipment_data[11]))),
+                "ScheduledDateDelivery": str(parse_date(handle_null(shipment_data[11]))),
                 "DeliveryTimeWindow": handle_null(shipment_data[12]),
+                "ShipmentExternalID": handle_null(shipment_data[13]),
                 "Good": [
                     {
                         "GoodID": str(uuid.uuid4()),
-                        "Description": None,
-                        "Weight": handle_null(shipment_data[3]),
-                        "Volume": handle_null(shipment_data[4]),
+                        "GoodDescription": None,
+                        "GoodWeight": handle_null(shipment_data[3]),
+                        "GoodVolume": handle_null(shipment_data[4]),
                         "SpecialRequirements": handle_null(
-                            f'Voucher: {handle_null(shipment_data[13])} | Receiver\'s telephone: {handle_null(shipment_data[14])} | ACS Endpoint: {handle_null(shipment_data[15])} | Volumetric weight: {handle_null(shipment_data[16])}'
+                            f'Receiver\'s telephone: {handle_null(shipment_data[14])} | ACS Endpoint: {handle_null(shipment_data[15])} | Volumetric weight: {handle_null(shipment_data[16])}'
                         ),
-                        "Type": None,
+                        "GoodType": None,
                         "Dimensions": handle_null(f'{shipment_data[5]} x {shipment_data[6]} x {shipment_data[7]}'),
-                        "RespLogisticsCo": "ACS"
+                        "RespLogisticsCo": "ACS",
+                        "GoodExternalID": handle_null(shipment_data[13])
                     }
                 ]
             }

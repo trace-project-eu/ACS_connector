@@ -1,0 +1,29 @@
+{
+    "ShipmentID": "5f53bc1a-2d93-4407-80d3-3e93f08c32b9",
+    "Origin": "Σταδίου 10, Αθήνα 10671",
+    "Destination": "Βηλαρά 8, Αιγάλεω, 12243",
+    "ShipmentWeight": "1,8",
+    "ShipmentVolume": 1.8,
+    "ShipmentType": null,
+    "ShipmentStatus": "Request imported to trace",
+    "PickUpDate": "2024-11-11 00:00:00",
+    "DeliveryDate": "2024-11-12 00:00:00",
+    "Priority": null,
+    "RespLogisticsCo": "ACS",
+    "ScheduledDateDelivery": "None",
+    "DeliveryTimeWindow": null,
+    "ShipmentExternalID": 9565245891,
+    "Good": [
+        {
+            "GoodID": "f86e1fd4-9426-4faf-9703-b32715db8923",
+            "GoodDescription": null,
+            "GoodWeight": "1,8",
+            "GoodVolume": 1.8,
+            "SpecialRequirements": "Receiver's telephone: 6547658545 | ACS Endpoint: None | Volumetric weight: 0,36",
+            "GoodType": null,
+            "Dimensions": "10 x 15 x 12",
+            "RespLogisticsCo": "ACS",
+            "GoodExternalID": 9565245891
+        }
+    ]
+}
