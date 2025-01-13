@@ -1,0 +1,44 @@
+{
+    "VehicleID": null,
+    "VehicleType": "UGV",
+    "VehicleStatus": "Onhold",
+    "Shareable": true,
+    "OperationalCost": 20,
+    "NominalConsumption": 5,
+    "NominalRange": 5000,
+    "NominalSpeed": 5,
+    "FuelType": "Electricity",
+    "LoadServiceTime": 150,
+    "UnloadServiceTime": 160,
+    "VehicleExternalID": "XX5555",
+    "Loads": [
+        {
+            "LoadID": null,
+            "WeightCapacity": 10,
+            "VolumeCapacity": 125000,
+            "Dimensions": [
+                50,
+                50,
+                50
+            ],
+            "LoadSpecialReq": null,
+            "Stable": false,
+            "LoadType": "Locker",
+            "FullyLoaded": true
+        },
+        {
+            "LoadID": null,
+            "WeightCapacity": 10,
+            "VolumeCapacity": 125000,
+            "Dimensions": [
+                50,
+                50,
+                50
+            ],
+            "LoadSpecialReq": null,
+            "Stable": false,
+            "LoadType": "Locker",
+            "FullyLoaded": false
+        }
+    ]
+}
