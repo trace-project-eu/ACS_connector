@@ -2,8 +2,9 @@ from datetime import datetime
 import uuid
 import json
 import math
+from sys import get_coroutine_origin_tracking_depth
 
-def generate_shipment_json(excel_data):
+def generate_shipment_json_old(excel_data):
 
     all_shipments = []
     for sheet, variables in excel_data.items():
@@ -49,6 +50,57 @@ def generate_shipment_json(excel_data):
         all_shipments.append(sheet_jsons)
 
     return all_shipments
+
+def generate_shipment_json(shipment_df, good_df):
+    # Process data
+    shipment_data = shipment_df.to_dict('records')
+    good_data = good_df.to_dict('records')
+    shipment_jsons = []
+
+    # Group loads by shipment number
+    goods_by_shipment = {}
+    for good in good_data:
+        shipment_no = handle_null(good.get("Corresponding Shipment"))
+        if shipment_no not in goods_by_shipment:
+            goods_by_shipment[shipment_no] = []
+        goods_by_shipment[shipment_no].append({
+            "GoodID": None,
+            "GoodDescription": handle_null(good.get('Good Description')),
+            "GoodWeight": handle_null(good.get('Good Weight')),
+            "GoodVolume": handle_null(good.get('Good Volume')),
+            "SpecialRequirements": handle_null(good.get('Special Requirements')),
+            "GoodType": handle_null(good.get('Good Type')),
+            "Dimensions": [handle_null(good.get('Length (cm)')), handle_null(good.get('Width (cm)')), handle_null(good.get('Height (cm)'))],
+            "RespLogisticCo": handle_null(good.get('Resp Logistic Co')),
+            "GoodExternalID": handle_null(good.get('Good External ID'))
+        })
+
+    # Combine data and generate JSON
+    for shipment in shipment_data:
+        shipment_no = handle_null(shipment.get('A/A'))
+        combined_data = {
+            "ShipmentID": None,
+            "Origin": handle_null(shipment.get('Origin')),
+            "Destination": handle_null(shipment.get('Destination')),
+            "ShipmentWeight": handle_null(shipment.get('Shipment Weight (kg)')),
+            "ShipmentVolume": handle_null(shipment.get('Shipment Volume (cm^3)')),
+            "ShipmentType": handle_null(shipment.get('Shipment Type')),
+            "ShipmentStatus": handle_null(shipment.get('Shipment Status')),
+            "PickUpDate": str(shipment.get('Pick Up Date')),
+            "DeliveryDate": str(shipment.get('Delivery Date')),
+            "Priority": handle_null(shipment.get('Priority')),
+            "RespLogisticCo": handle_null(shipment.get('Resp Logistic Co')),
+            "ScheduledDateDelivery": handle_null(shipment.get('Scheduled Date Delivery')),
+            "DeliveryTimeWindow": handle_null(shipment.get('Delivery Time Window')),
+            "ShipmentExternalID": handle_null(shipment.get('Shipment External ID')),
+            "Goods": handle_null(goods_by_shipment.get(shipment_no, []))
+        }
+
+        shipment_json = json.dumps(combined_data, ensure_ascii=False)
+        print("\n", json.dumps(combined_data, ensure_ascii=False, indent=4))
+        shipment_jsons.append(shipment_json)
+
+    return shipment_jsons
 
 def generate_vehicles_json(vehicle_df, load_df):
     # Process data

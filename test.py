@@ -1,7 +1,7 @@
 import pandas as pd
 
 from extract_excel_data import extract_excel_data
-from handle_jsons import generate_shipment_json
+from handle_jsons import generate_shipment_json_old
 
 def main():
     # Load the Excel file
@@ -10,7 +10,7 @@ def main():
 
     data = extract_excel_data(excel_data)
 
-    jsons = generate_shipment_json(data)
+    jsons = generate_shipment_json_old(data)
     print()
 
 if __name__ == "__main__":
