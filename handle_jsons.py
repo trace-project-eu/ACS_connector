@@ -96,9 +96,9 @@ def generate_shipment_json(shipment_df, good_df):
             "Goods": handle_null(goods_by_shipment.get(shipment_no, []))
         }
 
-        shipment_json = json.dumps(combined_data, ensure_ascii=False)
+        # shipment_json = json.dumps(combined_data, ensure_ascii=False)
         print("\n", json.dumps(combined_data, ensure_ascii=False, indent=4))
-        shipment_jsons.append(shipment_json)
+        shipment_jsons.append(combined_data)
 
     return shipment_jsons
 
@@ -146,7 +146,7 @@ def generate_vehicles_json(vehicle_df, load_df):
 
         vehicle_json = json.dumps(combined_data, ensure_ascii=False)
         print("\n", json.dumps(combined_data, ensure_ascii=False, indent=4))
-        vehicle_jsons.append(vehicle_json)
+        vehicle_jsons.append(combined_data)
 
         # # Write to JSON file
         # output_file = os.path.join(output_dir, f'vehicle_{vehicle_no}.json')
