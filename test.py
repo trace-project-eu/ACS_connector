@@ -2,18 +2,13 @@ from handle_requests import *
 
 def main():
 
-    # # Load the Excel file
-    # file_path = 'resources/Shipment-Good_example-1.xlsx'
-    #
-    # excel_data = pd.ExcelFile(file_path)
-    #
-    # data = extract_excel_data(excel_data)
-    #
-    # jsons = generate_shipment_json_old(data)
-    # print()
+    # Load the Excel file
+    file_path1 = 'resources/Shipment-Good_example-2_new.xlsx'
+    file_path2 = 'resources/Vehicle-Load_example.xlsx'
 
-    # json = handle_vehicle_request()
-    json = handle_shipment_request()
+    json = handle_shipment_request(file_path1)
+    print(json)
+    json = handle_vehicle_request(file_path2)
     print(json)
 
 
