@@ -4,8 +4,8 @@ from storage_utils import *
 def main():
 
     # # Load the Excel file
-    # file_path1 = 'resources/Shipment-Good_example-2_new.xlsx'
-    # file_path2 = 'resources/Vehicle-Load_example.xlsx'
+    # file_path1 = 'resources/Shipment-Good_data.xlsx'
+    # file_path2 = 'resources/Vehicle-Load_data.xlsx'
     #
     # json = handle_shipment_request(file_path1)
     # print(json)
@@ -13,17 +13,24 @@ def main():
     # print(json)
 
     json_test = {
-        "weightCapacity": 0,
-        "volumeCapacity": 0,
-        "dimensions": "string",
-        "loadSpecialReq": "string",
-        "stable": True,
-        "loadType": "Refrigerator",
-        "fullyLoaded": True,
-        "vehicle": None
+        "origin": "Τεμπών 6, Περιστέρι, 12137",
+        "destination": "Πανεπιστημιούπολη Ζωγράφου, Ζωγράφος, 15772, τμήμα πληροφορικής",
+        "shipmentWeight": 0.6,
+        "shipmentVolume": 250.0,
+        "shipmentType": "Standard",
+        "shipmentStatus": "Ongoing",
+        "pickUpDate": "2024-10-11 00:00:00",
+        "deliveryDate": "2024-11-11 00:00:00",
+        "priority": 5,
+        "respLogisticCo": "ACS",
+        "scheduledDateDelivery": None,
+        "deliveryTimeWindow": None,
+        "shipmentExternalID": "9369529396",
+        "sent_by": None,
+        "received_by": None
     }
 
-    post_load(json_test)
+    post_shipment(json_test)
 
 
 

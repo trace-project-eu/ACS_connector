@@ -2,7 +2,7 @@ import requests
 
 def post_vehicle(json_message):
 
-    url = "http://platform.trace.rid-intrasoft.eu/api/v1/vehicles"
+    url = "http://142.132.165.122:9014/api/v1/vehicles"
 
     response = requests.post(url, json=json_message)
     print(f'\nVehicle written to the database with ID: ', response.text)
@@ -11,7 +11,7 @@ def post_vehicle(json_message):
 
 
 def post_load(json_message):
-    url = "http://platform.trace.rid-intrasoft.eu/api/v1/loads"
+    url = "http://142.132.165.122:9014/api/v1/loads"
 
     response = requests.post(url, json=json_message)
     print(f'\nLoad written to the database with ID: ', response.text)
@@ -20,7 +20,7 @@ def post_load(json_message):
 
 
 def post_shipment(json_message):
-    url = "http://platform.trace.rid-intrasoft.eu/api/v1/shipments"
+    url = "http://142.132.165.122:9014/api/v1/shipments"
 
     response = requests.post(url, json=json_message)
     print(f'\nShipment written to the database with ID: ', response.text)
@@ -29,7 +29,7 @@ def post_shipment(json_message):
 
 
 def post_good(json_message):
-    url = "http://platform.trace.rid-intrasoft.eu/api/v1/goods"
+    url = "http://142.132.165.122:9014/api/v1/goods"
 
     response = requests.post(url, json=json_message)
     print(f'\nGood written to the database with ID: ', response.text)
