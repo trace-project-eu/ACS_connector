@@ -2,7 +2,6 @@ from datetime import datetime
 import uuid
 import json
 import math
-from sys import get_coroutine_origin_tracking_depth
 
 def generate_shipment_json_old(excel_data):
 

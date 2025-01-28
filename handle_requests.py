@@ -6,9 +6,7 @@ import pandas as pd
 import handle_jsons
 
 
-def handle_vehicle_request():
-    # File path
-    file_path = '/home/savvas/Workspace/ACS_connector/resources/Vehicle-Load_example.xlsx'
+def handle_vehicle_request(file_path):
 
     # Read Excel file
     vehicle_df = pd.read_excel(file_path, sheet_name='Vehicles')
@@ -16,9 +14,7 @@ def handle_vehicle_request():
 
     return handle_jsons.generate_vehicles_json(vehicle_df, load_df)
 
-def handle_shipment_request():
-    # File path
-    file_path = '/home/savvas/Workspace/ACS_connector/resources/Shipment-Good_example-2_new.xlsx'
+def handle_shipment_request(file_path):
 
     # Read Excel file
     shipment_df = pd.read_excel(file_path, sheet_name='Shipments')
