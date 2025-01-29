@@ -1,11 +1,12 @@
 from handle_requests import *
 from storage_utils import *
 
+
 def main():
 
     # # Load the Excel file
-    file_path1 = 'resources/Shipment-Good_data.xlsx'
-    file_path2 = 'resources/Vehicle-Load_data.xlsx'
+    # file_path1 = 'resources/Shipment-Good_data.xlsx'
+    file_path2 = "resources/Vehicle-Load_data.xlsx"
 
     # json = handle_shipment_request(file_path1)
     # print(json)
@@ -31,7 +32,6 @@ def main():
     # }
     #
     # post_shipment(json_test)
-
 
 
 if __name__ == "__main__":

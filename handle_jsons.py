@@ -51,10 +51,11 @@ from storage_utils import *
 #
 #     return all_shipments
 
+
 def generate_shipment_json(shipment_df, good_df):
     # Process data
-    shipment_data = shipment_df.to_dict('records')
-    good_data = good_df.to_dict('records')
+    shipment_data = shipment_df.to_dict("records")
+    good_data = good_df.to_dict("records")
     shipment_jsons = []
 
     # Group loads by shipment number
@@ -63,38 +64,47 @@ def generate_shipment_json(shipment_df, good_df):
         shipment_no = handle_null(good.get("Corresponding Shipment"))
         if shipment_no not in goods_by_shipment:
             goods_by_shipment[shipment_no] = []
-        goods_by_shipment[shipment_no].append({
-            # "GoodID": None,
-            "goodDescription": handle_null(good.get('Good Description')),
-            "goodWeight": handle_null(good.get('Good Weight')),
-            "goodVolume": handle_null(good.get('Good Volume')),
-            "specialRequirements": handle_null(good.get('Special Requirements')),
-            "goodType": handle_null(good.get('Good Type')),
-            "dimensions": ",".join(str(handle_null(good.get(dim))) for dim in ['Length (cm)', 'Width (cm)', 'Height (cm)']),
-            "respLogisticCo": handle_null(good.get('Resp Logistics Co')),
-            "goodExternalID": str(handle_null(good.get('Good External ID')))
-        })
+        goods_by_shipment[shipment_no].append(
+            {
+                # "GoodID": None,
+                "goodDescription": handle_null(good.get("Good Description")),
+                "goodWeight": handle_null(good.get("Good Weight")),
+                "goodVolume": handle_null(good.get("Good Volume")),
+                "specialRequirements": handle_null(good.get("Special Requirements")),
+                "goodType": handle_null(good.get("Good Type")),
+                "dimensions": ",".join(
+                    str(handle_null(good.get(dim)))
+                    for dim in ["Length (cm)", "Width (cm)", "Height (cm)"]
+                ),
+                "respLogisticCo": handle_null(good.get("Resp Logistics Co")),
+                "goodExternalID": str(handle_null(good.get("Good External ID"))),
+            }
+        )
 
     # Combine data and generate JSON
     for shipment in shipment_data:
-        shipment_no = handle_null(shipment.get('A/A'))
+        shipment_no = handle_null(shipment.get("A/A"))
         combined_data = {
             # "ShipmentID": None,
-            "origin": handle_null(shipment.get('Origin')),
-            "destination": handle_null(shipment.get('Destination')),
-            "shipmentWeight": handle_null(shipment.get('Shipment Weight (kg)')),
-            "shipmentVolume": handle_null(shipment.get('Shipment Volume (cm^3)')),
-            "shipmentType": handle_null(shipment.get('Shipment Type')),
-            "shipmentStatus": handle_null(shipment.get('Shipment Status')),
-            "pickUpDate": str(shipment.get('Pick Up Date')),
-            "deliveryDate": str(shipment.get('Delivery Date')),
-            "priority": handle_null(shipment.get('Priority')),
-            "respLogisticCo": handle_null(shipment.get('Resp Logistic Co')),
-            "scheduledDateDelivery": handle_null(shipment.get('Scheduled Date Delivery')),
-            "deliveryTimeWindow": handle_null(shipment.get('Delivery Time Window')),
-            "shipmentExternalID": str(handle_null(shipment.get('Shipment External ID'))),
+            "origin": handle_null(shipment.get("Origin")),
+            "destination": handle_null(shipment.get("Destination")),
+            "shipmentWeight": handle_null(shipment.get("Shipment Weight (kg)")),
+            "shipmentVolume": handle_null(shipment.get("Shipment Volume (cm^3)")),
+            "shipmentType": handle_null(shipment.get("Shipment Type")),
+            "shipmentStatus": handle_null(shipment.get("Shipment Status")),
+            "pickUpDate": str(shipment.get("Pick Up Date")),
+            "deliveryDate": str(shipment.get("Delivery Date")),
+            "priority": handle_null(shipment.get("Priority")),
+            "respLogisticCo": handle_null(shipment.get("Resp Logistic Co")),
+            "scheduledDateDelivery": handle_null(
+                shipment.get("Scheduled Date Delivery")
+            ),
+            "deliveryTimeWindow": handle_null(shipment.get("Delivery Time Window")),
+            "shipmentExternalID": str(
+                handle_null(shipment.get("Shipment External ID"))
+            ),
             "sent_by": None,
-            "received_by": None
+            "received_by": None,
         }
 
         shipment_id = post_shipment(combined_data)
@@ -107,11 +117,13 @@ def generate_shipment_json(shipment_df, good_df):
             post_good(good)
             print("\n", good)
 
+    return "Ingested shipment data"
+
 
 def generate_vehicles_json(vehicle_df, load_df):
     # Process data
-    vehicle_data = vehicle_df.to_dict('records')
-    load_data = load_df.to_dict('records')
+    vehicle_data = vehicle_df.to_dict("records")
+    load_data = load_df.to_dict("records")
     vehicle_jsons = []
 
     # Group loads by vehicle number
@@ -120,37 +132,42 @@ def generate_vehicles_json(vehicle_df, load_df):
         vehicle_no = load["Corresponding Vehicle"]
         if vehicle_no not in loads_by_vehicle:
             loads_by_vehicle[vehicle_no] = []
-        loads_by_vehicle[vehicle_no].append({
-            # "LoadID": None,
-            "weightCapacity": handle_null(load.get('Weight Capacity (kg)')),
-            "volumeCapacity": handle_null(load.get('Volume Capacity (cm^3)')),
-            "dimensions": ",".join(str(handle_null(load.get(dim))) for dim in ['Length (cm)', 'Width (cm)', 'Height (cm)']),
-            "loadSpecialReq": handle_null(load.get('Load Special Req')),
-            "stable": handle_null(bool(load.get('Stable'))),
-            "loadType": handle_null(load.get('Load Type')),
-            "fullyLoaded": handle_null(bool(load.get('Fully Loaded')))
-        })
+        loads_by_vehicle[vehicle_no].append(
+            {
+                # "LoadID": None,
+                "weightCapacity": handle_null(load.get("Weight Capacity (kg)")),
+                "volumeCapacity": handle_null(load.get("Volume Capacity (cm^3)")),
+                "dimensions": ",".join(
+                    str(handle_null(load.get(dim)))
+                    for dim in ["Length (cm)", "Width (cm)", "Height (cm)"]
+                ),
+                "loadSpecialReq": handle_null(load.get("Load Special Req")),
+                "stable": handle_null(bool(load.get("Stable"))),
+                "loadType": handle_null(load.get("Load Type")),
+                "fullyLoaded": handle_null(bool(load.get("Fully Loaded"))),
+            }
+        )
 
     # Combine data and generate JSON
     for vehicle in vehicle_data:
-        vehicle_no = vehicle['A/A']
+        vehicle_no = vehicle["A/A"]
         combined_data = {
             # "VehicleID": None,
-            "vehicleType": handle_null(vehicle.get('VehicleType')),
-            "vehicleStatus": handle_null(vehicle.get('VehicleStatus')),
-            "shareable": handle_null(bool(vehicle.get('Shareable'))),
-            "operationalCost": handle_null(vehicle.get('Operational Cost (Euro/hour)')),
-            "nominalConsumption": handle_null(vehicle.get('Nominal Consumption [Fuel Type]/hour')),
-            "nominalRange": handle_null(vehicle.get('Nominal Range (m)')),
-            "nominalSpeed": handle_null(vehicle.get('Nominal Speed (m/s)')),
-            "fuelType": handle_null(vehicle.get('Fuel Type')),
-            "loadServiceTime": handle_null(vehicle.get('Load Service Time (sec)')),
-            "unloadServiceTime": handle_null(vehicle.get('Unload Service Time (sec)')),
-            "vehicleExternalID": handle_null(vehicle.get('Vehicle External ID')),
+            "vehicleType": handle_null(vehicle.get("VehicleType")),
+            "vehicleStatus": handle_null(vehicle.get("VehicleStatus")),
+            "shareable": handle_null(bool(vehicle.get("Shareable"))),
+            "operationalCost": handle_null(vehicle.get("Operational Cost (Euro/hour)")),
+            "nominalConsumption": handle_null(
+                vehicle.get("Nominal Consumption [Fuel Type]/hour")
+            ),
+            "nominalRange": handle_null(vehicle.get("Nominal Range (m)")),
+            "nominalSpeed": handle_null(vehicle.get("Nominal Speed (m/s)")),
+            "fuelType": handle_null(vehicle.get("Fuel Type")),
+            "loadServiceTime": handle_null(vehicle.get("Load Service Time (sec)")),
+            "unloadServiceTime": handle_null(vehicle.get("Unload Service Time (sec)")),
+            "vehicleExternalID": handle_null(vehicle.get("Vehicle External ID")),
             "belongs_to": None,
-            "transportationModes": [
-
-            ]
+            "transportationModes": [],
             # "loads": handle_null(loads_by_vehicle.get(vehicle_no, []))
         }
 
@@ -164,12 +181,20 @@ def generate_vehicles_json(vehicle_df, load_df):
             post_load(load)
             print("\n", load)
 
+    return "Ingested vehicle data"
+
 
 def handle_null(value):
     """Returns None for empty, falsy, or NaN values. Otherwise, returns the value."""
-    if value is None or value == "" or (isinstance(value, float) and math.isnan(value)) or str(value).lower() == "nan":
+    if (
+        value is None
+        or value == ""
+        or (isinstance(value, float) and math.isnan(value))
+        or str(value).lower() == "nan"
+    ):
         return None
     return value
+
 
 def parse_date(date_string):
     """Converts a string in 'dd/mm/yyyy' format to a datetime object."""
