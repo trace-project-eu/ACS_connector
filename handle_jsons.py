@@ -2,6 +2,7 @@ from datetime import datetime
 import uuid
 import json
 import math
+from storage_utils import *
 
 # def generate_shipment_json_old(excel_data):
 #
@@ -93,15 +94,19 @@ def generate_shipment_json(shipment_df, good_df):
             "deliveryTimeWindow": handle_null(shipment.get('Delivery Time Window')),
             "shipmentExternalID": str(handle_null(shipment.get('Shipment External ID'))),
             "sent_by": None,
-            "received_by": None,
-            "goods": handle_null(goods_by_shipment.get(shipment_no, []))
+            "received_by": None
         }
 
-        # shipment_json = json.dumps(combined_data, ensure_ascii=False)
+        shipment_id = post_shipment(combined_data)
         print("\n", json.dumps(combined_data, ensure_ascii=False, indent=4))
-        shipment_jsons.append(combined_data)
 
-    return shipment_jsons
+        for good in goods_by_shipment[shipment_no]:
+            good["shipmentID"] = shipment_id.strip('"')
+            print("\n", json.dumps(good, ensure_ascii=False, indent=4))
+
+            post_good(good)
+            print("\n", good)
+
 
 def generate_vehicles_json(vehicle_df, load_df):
     # Process data
@@ -142,19 +147,23 @@ def generate_vehicles_json(vehicle_df, load_df):
             "loadServiceTime": handle_null(vehicle.get('Load Service Time (sec)')),
             "unloadServiceTime": handle_null(vehicle.get('Unload Service Time (sec)')),
             "vehicleExternalID": handle_null(vehicle.get('Vehicle External ID')),
-            "loads": handle_null(loads_by_vehicle.get(vehicle_no, []))
+            "belongs_to": None,
+            "transportationModes": [
+
+            ]
+            # "loads": handle_null(loads_by_vehicle.get(vehicle_no, []))
         }
 
-        vehicle_json = json.dumps(combined_data, ensure_ascii=False)
+        vehicle_id = post_vehicle(combined_data)
         print("\n", json.dumps(combined_data, ensure_ascii=False, indent=4))
-        vehicle_jsons.append(combined_data)
 
-        # # Write to JSON file
-        # output_file = os.path.join(output_dir, f'vehicle_{vehicle_no}.json')
-        # with open(output_file, 'w') as json_file:
-        #     json.dump(combined_data, json_file, indent=4)
+        for load in loads_by_vehicle[vehicle_no]:
+            load["vehicle"] = vehicle_id.strip('"')
+            print("\n", json.dumps(load, ensure_ascii=False, indent=4))
 
-    return vehicle_jsons
+            post_load(load)
+            print("\n", load)
+
 
 def handle_null(value):
     """Returns None for empty, falsy, or NaN values. Otherwise, returns the value."""

@@ -7,7 +7,7 @@ def post_vehicle(json_message):
     response = requests.post(url, json=json_message)
     print(f'\nVehicle written to the database with ID: ', response.text)
 
-    return response
+    return response.text
 
 
 def post_load(json_message):
@@ -16,7 +16,7 @@ def post_load(json_message):
     response = requests.post(url, json=json_message)
     print(f'\nLoad written to the database with ID: ', response.text)
 
-    return response
+    return response.text
 
 
 def post_shipment(json_message):
@@ -25,7 +25,7 @@ def post_shipment(json_message):
     response = requests.post(url, json=json_message)
     print(f'\nShipment written to the database with ID: ', response.text)
 
-    return response
+    return response.text
 
 
 def post_good(json_message):
@@ -34,4 +34,4 @@ def post_good(json_message):
     response = requests.post(url, json=json_message)
     print(f'\nGood written to the database with ID: ', response.text)
 
-    return response
+    return response.text
